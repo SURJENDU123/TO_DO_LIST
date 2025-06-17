@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>To-Do List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light no-scroll">
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow rounded">
+          <div class="card-body">
+
+            <h1 class="card-title text-center mb-4">📝 MANAGE YOUR TASKS</h1>
+            <div class="form-check form-switch ms-auto me-3 d-flex align-items-center">
+              <input class="form-check-input" type="checkbox" id="themeToggle" onclick="toggleTheme()" hidden>
+              <label class="form-check-label mb-0" for="themeToggle">
+                <i id="themeIcon" class="fas fa-sun"></i>
+              </label>
+            </div>
+
+            <div class="row g-2">
+              <div class="col-12">
+                <input type="text" id="taskInput" class="form-control" placeholder="Enter a new task">
+              </div>
+              <div class="col-md-6">
+                <input type="date" id="taskDate" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <input type="time" id="taskTime" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <select id="taskPriority" class="form-control">
+                  <option value="default" selected>Select Priority</option>
+                  <option value="low">Low</option>
+                  <option value="normal">Normal</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="enableAlarm" onchange="toggleAlarmOptions()">
+                  <label class="form-check-label" for="enableAlarm">Set Alarm(if you want to add)</label>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-none" id="alarmOptions">
+                <label for="alarmSoundSelect" class="form-label" id="Choose">Choose Alarm Sound:</label>
+                <select id="alarmSoundSelect" class="form-control">
+                  <option value="">Select a sound</option>
+                  <option value="songs/alarm.mp3">Default Alarm</option>
+                  <option value="songs/Ram_shiya_ram.mp3">Ram Shiya Ram</option>
+                  <option value="songs/tum_prem_ho.mp3">Tum Prem Ho</option>
+                  <option value="songs/Felix_cartal_clock.mp3">Felix_cartal_clock</option>
+                  <option value="songs/Hunkar_Bhara.mp3">Hunkar_Bhara</option>
+                  <option value="songs/Get_Ready_To_Fight.mp3">Get_Ready_To_Fight</option>
+                </select>
+
+              </div>
+              
+              <div class="col-12 d-grid">
+                <button onclick="addTask()" class="btn btn-primary">Add Task</button>
+              </div>
+              <div class="col-12 d-flex justify-content-end position-relative">
+                <button class="btn btn-light text-dark btn-sm" style="font-size: 25px;" onclick="toggleFilter()">
+                  <i class="fas fa-filter"></i>
+                </button>
+                <ul id="filterDropdown" class="list-group position-absolute start-0 mt-2 shadow d-none"
+                  style="z-index: 1000; max-width: 550px;">
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('all')">
+                    Show All Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('today')">
+                    Today's Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('upcoming')">
+                    Upcoming Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('past')">
+                    Past Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('completed')">
+                    Completed Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('incomplete')">
+                    Incomplete Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('priority-high')">
+                    High Priority Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('priority-normal')">
+                    Normal Priority Tasks
+                  </li>
+                  <li class="list-group-item list-group-item-action" onclick="setFilter('priority-low')">
+                    Low Priority Tasks
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <!-- Task List -->
+            <ul id="taskList" class="list-group mt-4"></ul>
+            <p id="noTaskMsg" class="text-center  mt-3" style="display: none;">No tasks available.</p>
+
+
+            <p>
+              <a class="btn btn-outline-info btn-sm" data-bs-toggle="collapse" href="#howItWorks" role="button"
+                aria-expanded="false" aria-controls="howItWorks">
+                <i class="fas fa-question-circle me-1"></i> Show Instructions
+              </a>
+            </p>
+            <div class="collapse" id="howItWorks">
+              <div class="alert alert-info shadow-sm">
+                <h5 class="mb-2"><i class="fas fa-info-circle me-2"></i>How This Task Manager Works:</h5>
+                <ul class="mb-0 ps-3">
+                  <li>Add tasks with all required details and optional alarms.</li>
+                  <li>Alarm will sound at the specified time.</li>
+                  <li>Alarm will be sound only for one time.</li>
+                  <li>Filter tasks based on priority and status.</li>
+                  <li>Dark mode is available using the toggle at the top.</li>
+                  <li>Data is stored locally and survives refreshes.</li>
+                  <li>You have to open this in background Section for Alarm notifications.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Toast Centered -->
+  <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1100;">
+    <div id="taskToast" class="toast text-bg-success border-0 " role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="toast-body">
+          Task added successfully!
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-2 me-2" data-bs-dismiss="toast"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
